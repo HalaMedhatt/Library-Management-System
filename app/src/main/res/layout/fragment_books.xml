@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BooksFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/books_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/cafe1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <EditText
+                android:id="@+id/search_et"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/white"
+                android:drawableEnd="@drawable/baseline_search_24"
+                android:hint="Search"
+                android:inputType="text"
+                android:paddingHorizontal="10dp"
+                android:textColor="@color/brown" />
+
+            <ImageButton
+                android:id="@+id/filter_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:contentDescription="Filters"
+                android:src="@drawable/baseline_filter_list_24" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_book_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/cafe2"
+        android:contentDescription="Add a Book"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_foreground" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/books_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/books_appbar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
