@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreenFragment">
+    tools:context=".ui.SplashScreenFragment">
 
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:src="@drawable/splashphoto"
+        android:background="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:backgroundTint="@color/background"
     android:layout_height="match_parent"
-    tools:context=".BooksFragment">
+    tools:context=".ui.BooksFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/books_appbar"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:background="@color/cafe1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,23 +20,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center|right">
             <EditText
-                android:id="@+id/search_et"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:layout_marginHorizontal="20dp"
-                android:background="@color/white"
-                android:drawableEnd="@drawable/baseline_search_24"
+                android:id="@+id/searchBook_et"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
                 android:hint="Search"
+                android:textSize="20sp"
+                android:visibility="gone"
                 android:inputType="text"
-                android:paddingHorizontal="10dp"
-                android:textColor="@color/brown" />
+                android:padding="8dp"
+                android:layout_marginEnd="8dp" />
+
+            <ImageButton
+                android:id="@+id/expandSearchBook_ib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_search_24"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Search Icon" />
 
             <ImageButton
                 android:id="@+id/filter_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@null"
                 android:contentDescription="Filters"
                 android:src="@drawable/baseline_filter_list_24" />
@@ -45,12 +53,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_book_btn"
+        android:id="@+id/add_new_book_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/cafe2"
+        android:backgroundTint="@color/cafe1"
+        android:outlineAmbientShadowColor="@color/brown"
+        app:rippleColor="@color/brown"
         android:contentDescription="Add a Book"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,10 +71,13 @@
         android:id="@+id/books_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
+        android:layout_margin="9dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/books_appbar" />
+        app:layout_constraintTop_toBottomOf="@+id/books_appbar"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/book_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

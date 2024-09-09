@@ -1,4 +1,4 @@
-package com.hala.librarymanagementsystem
+package com.hala.librarymanagementsystem.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

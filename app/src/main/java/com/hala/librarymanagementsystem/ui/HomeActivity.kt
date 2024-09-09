@@ -1,8 +1,11 @@
-package com.hala.librarymanagementsystem
+package com.hala.librarymanagementsystem.ui
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.hala.librarymanagementsystem.R
 import com.hala.librarymanagementsystem.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -12,6 +15,9 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var members: MembersFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.my_light_primary_dark)
+        }
         activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(activityHomeBinding.root)
 

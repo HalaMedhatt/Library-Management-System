@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    android:background="@color/background"
+    tools:context=".ui.HomeActivity">
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -19,9 +20,8 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_view"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="75dp"
         android:background="@color/cafe1"
-        android:paddingVertical="10dp"
         app:itemTextColor="@color/brown"
         app:itemIconTint="@color/brown"
         app:layout_constraintBottom_toBottomOf="parent"

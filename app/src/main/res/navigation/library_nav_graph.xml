@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.hala.librarymanagementsystem.SplashScreenFragment"
+        android:name="com.hala.librarymanagementsystem.ui.SplashScreenFragment"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.hala.librarymanagementsystem.LoginFragment"
+        android:name="com.hala.librarymanagementsystem.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <activity
         android:id="@+id/homeActivity"
-        android:name="com.hala.librarymanagementsystem.HomeActivity"
+        android:name="com.hala.librarymanagementsystem.ui.HomeActivity"
         android:label="activity_home"
         tools:layout="@layout/activity_home" />
 </navigation>
