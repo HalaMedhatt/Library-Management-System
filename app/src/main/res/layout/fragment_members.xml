@@ -76,4 +76,18 @@
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/member_item" />
 
+    <TextView
+        android:id="@+id/no_result_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="No results found"
+        android:textSize="25sp"
+        android:textColor="@color/brown"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/members_appbar"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

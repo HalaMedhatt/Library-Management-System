@@ -12,9 +12,9 @@ import com.hala.librarymanagementsystem.model.BookData
 
 class BookRecyclerView : RecyclerView.Adapter<BookRecyclerView.BookViewHolder>() {
 
-    private var bookList: ArrayList<BookData> = ArrayList()
+    private var bookList: List<BookData> = ArrayList()
 
-    fun setBooks(bookList: ArrayList<BookData>) {
+    fun setBooks(bookList: List<BookData>) {
         this.bookList = bookList
         notifyDataSetChanged()
     }

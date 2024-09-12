@@ -3,31 +3,41 @@ package com.hala.librarymanagementsystem.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Patterns
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import com.hala.librarymanagementsystem.R
 import com.hala.librarymanagementsystem.databinding.DialogAddMemberBinding
 import com.hala.librarymanagementsystem.databinding.FragmentMembersBinding
-import com.hala.librarymanagementsystem.model.memberData
+import com.hala.librarymanagementsystem.model.LibraryViewModel
+import com.hala.librarymanagementsystem.model.MemberData
+import com.hala.librarymanagementsystem.model.MemberFilters
 import com.hala.librarymanagementsystem.ui.adapter.MemberRecyclerView
 
 class MembersFragment : Fragment() {
 
     private lateinit var membersBinding: FragmentMembersBinding
     private lateinit var dialogBinding: DialogAddMemberBinding
-    private lateinit var memberFilters: List<String>
-    private lateinit var memberList: ArrayList<memberData>
+    private val memberFilters: List<String> = enumValues<MemberFilters>().map { it.displayName }
+    private var selectedSearchFilter = MemberFilters.ALL
     private var isSearchBarVisible = false
     private val memberRecyclerView:MemberRecyclerView by lazy {
         MemberRecyclerView()
     }
+    private val memberViewModel: LibraryViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,13 +48,44 @@ class MembersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        memberList=ArrayList<memberData>()
-        membersBinding.membersRv.adapter=memberRecyclerView
+        setUpRecyclerView()
         membersBinding.expandSearchIb.setOnClickListener {
             toggleSearchBar()
         }
         membersBinding.addMemberBtn.setOnClickListener{
             showAddMemberDialog()
+        }
+        membersBinding.filterBtn.setOnClickListener {
+            showFilterMenu()
+        }
+        membersBinding.searchEt.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)
+            ) {
+                hideKeyboard()
+                val searchText = v.text.toString()
+                searchByFilter(searchText)
+                true
+            } else false
+        }
+        membersBinding.searchEt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    searchByFilter("")
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+    }
+    private fun setUpRecyclerView() {
+        membersBinding.membersRv.adapter=memberRecyclerView
+        memberViewModel.listAllMembers().observe(viewLifecycleOwner) { members ->
+            memberRecyclerView.addMember(members)
         }
     }
     @SuppressLint("SuspiciousIndentation")
@@ -117,10 +158,18 @@ class MembersFragment : Fragment() {
         }
 
             // Add the member to the list
-            memberList.add(memberData(memberList.size+1,email, name, isPremium, borrowBooks))
-            memberRecyclerView.addMember(memberList)
+            val newMember = MemberData(
+                email = email,
+                name = name,
+                isPremium =  isPremium,
+                maxNumberOfBooks =  borrowBooks)
+            memberViewModel.addMember(newMember)
+            memberViewModel.listAllMembers().observe(viewLifecycleOwner) { members ->
+                memberRecyclerView.addMember(members)
+            }
             Toast.makeText(context, "Added Member", Toast.LENGTH_SHORT).show()
-        return true;
+             // Store Member in the database
+        return true
 
     }
     private fun toggleSearchBar() {
@@ -146,6 +195,70 @@ class MembersFragment : Fragment() {
     private fun hideKeyboard() {
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(membersBinding.root.windowToken, 0)
+    }
+
+    private fun showFilterMenu() {
+        val popupMenu = PopupMenu(context, membersBinding.filterBtn)
+
+        memberFilters.forEachIndexed { index, filter ->
+            popupMenu.menu.add(0, index, 0, filter)
+        }
+
+        popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
+            val selectedFilter = memberFilters[menuItem.itemId]
+            selectedSearchFilter = MemberFilters.entries.find { it.displayName == selectedFilter }!!
+
+            val searchText = membersBinding.searchEt.text.toString()
+            searchByFilter(searchText)
+
+            true
+        }
+
+        popupMenu.show()
+    }
+
+    private fun searchByFilter(searchText: String) {
+        when(selectedSearchFilter) {
+            MemberFilters.ALL -> {
+                if(searchText.isEmpty()) {
+                    memberViewModel.listAllMembers().observe(viewLifecycleOwner) { members ->
+                        showSearchResult(members)
+                    }
+                }
+                else {
+                    memberViewModel.findMemberByName(searchText)
+                        .observe(viewLifecycleOwner) { members ->
+                            showSearchResult(members)
+                        }
+                }
+            }
+            MemberFilters.PREMIUM -> {
+                if(searchText.isEmpty()) {
+                    memberViewModel.listPremiumMembers()
+                        .observe(viewLifecycleOwner) { members ->
+                            showSearchResult(members)
+                        }
+                }
+                else {
+                    memberViewModel.findPremiumMemberByName(searchText)
+                        .observe(viewLifecycleOwner) { members ->
+                            showSearchResult(members)
+                        }
+                }
+            }
+        }
+    }
+
+    private fun showSearchResult(members: List<MemberData>?) {
+        if(members.isNullOrEmpty()) {
+            membersBinding.membersRv.visibility = View.GONE
+            membersBinding.noResultTv.visibility = View.VISIBLE
+        }
+        else {
+            membersBinding.noResultTv.visibility = View.GONE
+            memberRecyclerView.addMember(members)
+            membersBinding.membersRv.visibility = View.VISIBLE
+        }
     }
 
 }

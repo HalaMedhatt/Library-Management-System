@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:backgroundTint="@color/background"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/background"
     tools:context=".ui.BooksFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -19,26 +19,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center|right">
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/searchBook_et"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:hint="Search"
-                android:textSize="20sp"
-                android:visibility="gone"
                 android:inputType="text"
                 android:padding="8dp"
-                android:layout_marginEnd="8dp" />
+                android:textSize="20sp"
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/expandSearchBook_ib"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_search_24"
                 android:background="?attr/selectableItemBackground"
-                android:contentDescription="Search Icon" />
+                android:contentDescription="Search Icon"
+                android:src="@drawable/baseline_search_24" />
 
             <ImageButton
                 android:id="@+id/filter_btn"
@@ -59,12 +60,12 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="@color/cafe1"
-        android:outlineAmbientShadowColor="@color/brown"
-        app:rippleColor="@color/brown"
         android:contentDescription="Add a Book"
+        android:outlineAmbientShadowColor="@color/brown"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/brown"
         app:srcCompat="@drawable/ic_add_foreground" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -79,5 +80,19 @@
         app:layout_constraintTop_toBottomOf="@+id/books_appbar"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/book_item" />
+
+    <TextView
+        android:id="@+id/no_result_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="No results found"
+        android:textSize="25sp"
+        android:textColor="@color/brown"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/books_appbar"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
