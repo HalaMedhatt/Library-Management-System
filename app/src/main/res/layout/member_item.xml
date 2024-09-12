@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="40dp"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/background"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="40dp"
+            app:cardBackgroundColor="@color/cafe2">
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cafe2"
+            android:columnCount="2">
+            <TextView
+                android:id="@+id/showMemberId_tv"
+                android:layout_columnWeight="3"
+                android:textSize="15sp"
+                android:layout_gravity="left"
+                android:paddingStart="25dp"
+                android:textColor="@color/brown"
+                android:text="ID"
+                android:textStyle="bold"
+                android:paddingTop="10dp"/>
+            <ImageView
+                android:id="@+id/premium_iv"
+                android:layout_gravity="top|right"
+                android:paddingRight="35dp"
+                android:layout_columnWeight="1"
+                android:src="@drawable/round_star_24"/>
+            <TextView
+                android:id="@+id/showMemberName_tv"
+                android:layout_columnWeight="3"
+                android:text="Name"
+                android:textSize="15sp"
+                android:layout_gravity="left"
+                android:paddingStart="25dp"
+                android:textColor="@color/brown"
+                android:textStyle="bold" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1" />
+
+
+            <ImageButton
+
+                android:id="@+id/moor_data_ib"
+                android:background="@null"
+                android:layout_gravity="center"
+                android:src="@drawable/baseline_expand_more_24"
+                android:layout_columnWeight="2"
+                android:layout_columnSpan="2"  />
+
+        </GridLayout>
+        </androidx.cardview.widget.CardView>
+    <!-- Expandable section -->
+    <LinearLayout
+        android:id="@+id/memberDetailsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="6dp">
+
+
+
+        <!-- Additional details -->
+        <TextView
+            android:id="@+id/memberEmail_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="7dp"
+            android:text="Email: "
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/memberBorrowBooks_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Max Books: "
+            android:paddingStart="7dp"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/memberCurrentBorrowedBooks_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Currently Borrowed: "
+            android:paddingStart="7dp"
+            android:textSize="16sp"/>
+
+        <!-- List of borrowed books -->
+        <TextView
+            android:id="@+id/borrowedBooksList_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Borrowed Books: "
+            android:paddingStart="7dp"
+            android:paddingBottom="9dp"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+

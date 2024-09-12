@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="70dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/addMember_tv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/cafe1"
+            android:gravity="center"
+            android:text="Add Member"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/email_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Member Email"
+            android:inputType="textEmailAddress"
+            android:textSize="20sp"
+            android:layout_margin="5dp"/>
+
+        <!-- Member Name -->
+        <EditText
+            android:id="@+id/name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Member Name"
+            android:inputType="textPersonName"
+            android:textSize="20sp"
+            android:layout_margin="5dp"/>
+
+        <!-- RadioGroup for Member Type -->
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/normal_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Normal Member"
+                android:textSize="13sp" />
+
+            <RadioButton
+                android:id="@+id/premium_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Premium Member"
+                android:textSize="13sp" />
+        </RadioGroup>
+
+        <!-- Number of Borrowable Books (Only for Premium Members) -->
+        <EditText
+            android:id="@+id/borrowBooks_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter number of Borrowable Books"
+            android:inputType="number"
+            android:textSize="18sp"
+            android:visibility="gone" />
+        <!-- Buttons for Add and Cancel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cafe1"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cafe1"
+                android:text="Add"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+
