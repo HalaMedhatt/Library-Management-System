@@ -7,16 +7,18 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.hala.librarymanagementsystem.R
+import com.hala.librarymanagementsystem.model.BookData
 import com.hala.librarymanagementsystem.model.MemberData
 
-class MemberRecyclerView : RecyclerView.Adapter<MemberRecyclerView.memberViewHolder>() {
+class MemberRecyclerView(private val itemDeletedListener: OnItemDeleted<MemberData>) : RecyclerView.Adapter<MemberRecyclerView.memberViewHolder>() {
 
-    private var memberList: List<MemberData> = ArrayList()
+    private var memberList: MutableList<MemberData> = mutableListOf()
 
-    fun addMember(memberList: List<MemberData>) {
-        this.memberList = memberList
+    fun addMember(members: List<MemberData>) {
+        this.memberList = members.toMutableList() // Convert List to MutableList
         notifyDataSetChanged()
     }
 
@@ -61,6 +63,39 @@ class MemberRecyclerView : RecyclerView.Adapter<MemberRecyclerView.memberViewHol
                 } else {
                     memberDetailsLayout.visibility = View.VISIBLE
                 }
+            }
+            // Set Long Click Listener for deleting the member
+            itemView.setOnLongClickListener {
+                showDeleteConfirmationDialog(position)
+                true
+            }
+        }
+        private fun showDeleteConfirmationDialog(position: Int) {
+            val context = itemView.context
+            val builder = AlertDialog.Builder(context, R.style.CustomAlertDialogTheme) // Apply custom style
+            builder.setTitle("Delete Member")
+            builder.setMessage("Are you sure that you want to delete this member?")
+
+            builder.setPositiveButton("OK") { dialog, _ ->
+                deleteMember(position) // Delete the member
+                dialog.dismiss()
+            }
+
+            builder.setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            builder.create().show()
+        }
+
+        private fun deleteMember(position: Int) {
+            if (position >= 0 && position < memberList.size) {
+                val memberToDelete = memberList[position] // Get the member to delete
+                memberList.removeAt(position) // Remove the member from the list
+                notifyItemRemoved(position) // Notify the adapter
+
+                // Notify the listener with the member to delete
+                itemDeletedListener.onItemDeleted(memberToDelete)
             }
         }
     }

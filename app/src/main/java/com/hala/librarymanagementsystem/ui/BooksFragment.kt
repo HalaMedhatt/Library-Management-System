@@ -29,8 +29,9 @@ import com.hala.librarymanagementsystem.model.BookData
 import com.hala.librarymanagementsystem.model.BookFilters
 import com.hala.librarymanagementsystem.model.LibraryViewModel
 import com.hala.librarymanagementsystem.ui.adapter.BookRecyclerView
+import com.hala.librarymanagementsystem.ui.adapter.OnItemDeleted
 
-class BooksFragment : Fragment() {
+class BooksFragment : Fragment() ,OnItemDeleted<BookData>{
 
     private lateinit var booksBinding: FragmentBooksBinding
     private lateinit var dialogAddBookBinding: DialogAddBookBinding
@@ -39,14 +40,13 @@ class BooksFragment : Fragment() {
     private var selectedImageUri: Uri? = null
     private var isSearchBarVisible = false
     private val bookRecyclerView: BookRecyclerView by lazy {
-        BookRecyclerView()
+        BookRecyclerView(this)
     }
     private val bookViewModel: LibraryViewModel by viewModels()
 
     companion object {
         private const val REQUEST_IMAGE_PICK = 1
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -126,12 +126,17 @@ class BooksFragment : Fragment() {
                     imageUri = selectedImageUri?.toString()
                         ?: "android.resource://${requireContext().packageName}/${R.drawable.temp_book}"  // Use default image if none is selected
                 )
-                bookViewModel.addBook(newBook) // Store book in database
-                // Update the adapter with the new list
-                bookViewModel.listAllBooks().observe(viewLifecycleOwner) { books ->
-                    bookRecyclerView.setBooks(books)
-                }
 
+                bookViewModel.addBook(newBook) { isAdded ->
+                    if (isAdded) {
+                        bookViewModel.listAllBooks().observe(viewLifecycleOwner) { books ->
+                            bookRecyclerView.setBooks(books)
+                        }
+                        Toast.makeText(context, "Book added successfully", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Failed to add book", Toast.LENGTH_SHORT).show()
+                    }
+                }
                 dialog.dismiss()
 
             } else {
@@ -245,6 +250,17 @@ class BooksFragment : Fragment() {
             booksBinding.noResultTv.visibility = View.GONE
             bookRecyclerView.setBooks(books)
             booksBinding.booksRv.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onItemDeleted(book: BookData) {
+
+        bookViewModel.deleteBook(book) { isDeleted ->
+            if (isDeleted) {
+                Toast.makeText(context, "Book deleted successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Failed to delete book", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

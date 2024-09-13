@@ -7,19 +7,38 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LibraryViewModel(application: Application): AndroidViewModel(application) {
     private val database: LibraryDB = LibraryDB.getDatabase(application.applicationContext)
 
-    fun addBook(book: BookData) {
+    fun addBook(book: BookData, onComplete: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            database.libraryDao().insertBook(book)
+            try {
+                database.libraryDao().insertBook(book)
+                withContext(Dispatchers.Main) {
+                    onComplete(true) // Notify success
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    onComplete(false) // Notify failure (optional)
+                }
+            }
         }
     }
 
-    fun addMember(member: MemberData) {
+    fun addMember(member: MemberData, onComplete: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            database.libraryDao().insertMember(member)
+            try {
+                database.libraryDao().insertMember(member)
+                withContext(Dispatchers.Main) {
+                    onComplete(true) // Notify success
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    onComplete(false) // Notify failure (optional)
+                }
+            }
         }
     }
 
@@ -35,15 +54,33 @@ class LibraryViewModel(application: Application): AndroidViewModel(application) 
         }
     }
 
-    fun deleteBook(book: BookData) {
+    fun deleteBook(book: BookData, onComplete: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            database.libraryDao().deleteBook(book)
+            try {
+                database.libraryDao().deleteBook(book)
+                withContext(Dispatchers.Main) {
+                    onComplete(true) // Notify success
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    onComplete(false) // Notify failure (optional)
+                }
+            }
         }
     }
 
-    fun deleteMember(member: MemberData) {
+    fun deleteMember(member: MemberData, onComplete: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            database.libraryDao().deleteMember(member)
+            try {
+                database.libraryDao().deleteMember(member)
+                withContext(Dispatchers.Main) {
+                    onComplete(true) // Notify success
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    onComplete(false) // Notify failure (optional)
+                }
+            }
         }
     }
 

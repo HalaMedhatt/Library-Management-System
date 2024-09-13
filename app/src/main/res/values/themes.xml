@@ -1,9 +1,37 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.LibraryManagementSystem" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.LibraryManagementSystem" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/cafe2</item>
+        <item name="colorPrimaryVariant">@color/cafe3</item>
+        <item name="colorOnPrimary">@color/background</item>
+
+        <!-- Accent color -->
+        <item name="colorAccent">@color/brown</item>
+
+        <!-- Background color -->
+        <item name="android:windowBackground">@color/background</item>
+
+        <!-- Text colors -->
+        <item name="android:textColor">@color/brown</item>
+        <item name="android:textColorSecondary">@color/black</item>
+
     </style>
 
-    <style name="Theme.LibraryManagementSystem" parent="Base.Theme.LibraryManagementSystem" />
+        <!-- Define a custom style for the dialog -->
+    <style name="CustomDialogButton" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textColor">@color/cafe3</item> <!-- Replace with your color -->
+    </style>
+
+    <!-- Custom dialog theme -->
+    <style name="CustomAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Customize the background color of the dialog -->
+        <item name="android:background">@color/background</item>
+        <!-- Customize the color of the title text -->
+        <item name="android:textColorPrimary">@color/brown</item>
+        <!-- Customize the color of the buttons -->
+        <item name="android:buttonStyle">@style/CustomDialogButton</item> <!-- Apply custom button style -->
+        <!-- Optional: Customize other aspects if needed -->
+    </style>
+
 </resources>
+

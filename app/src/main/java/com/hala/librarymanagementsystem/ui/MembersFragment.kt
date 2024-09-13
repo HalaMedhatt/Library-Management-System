@@ -22,12 +22,14 @@ import androidx.fragment.app.viewModels
 import com.hala.librarymanagementsystem.R
 import com.hala.librarymanagementsystem.databinding.DialogAddMemberBinding
 import com.hala.librarymanagementsystem.databinding.FragmentMembersBinding
+import com.hala.librarymanagementsystem.model.BookData
 import com.hala.librarymanagementsystem.model.LibraryViewModel
 import com.hala.librarymanagementsystem.model.MemberData
 import com.hala.librarymanagementsystem.model.MemberFilters
 import com.hala.librarymanagementsystem.ui.adapter.MemberRecyclerView
+import com.hala.librarymanagementsystem.ui.adapter.OnItemDeleted
 
-class MembersFragment : Fragment() {
+class MembersFragment : Fragment(),OnItemDeleted<MemberData> {
 
     private lateinit var membersBinding: FragmentMembersBinding
     private lateinit var dialogBinding: DialogAddMemberBinding
@@ -35,7 +37,7 @@ class MembersFragment : Fragment() {
     private var selectedSearchFilter = MemberFilters.ALL
     private var isSearchBarVisible = false
     private val memberRecyclerView:MemberRecyclerView by lazy {
-        MemberRecyclerView()
+        MemberRecyclerView(this)
     }
     private val memberViewModel: LibraryViewModel by viewModels()
     override fun onCreateView(
@@ -163,12 +165,18 @@ class MembersFragment : Fragment() {
                 name = name,
                 isPremium =  isPremium,
                 maxNumberOfBooks =  borrowBooks)
-            memberViewModel.addMember(newMember)
-            memberViewModel.listAllMembers().observe(viewLifecycleOwner) { members ->
-                memberRecyclerView.addMember(members)
+        memberViewModel.addMember(newMember) { isAdded ->
+            if (isAdded) {
+                memberViewModel.listAllMembers().observe(viewLifecycleOwner) { members ->
+                    memberRecyclerView.addMember(members)
+                }
+                Toast.makeText(context, "Member added successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Failed to add Member", Toast.LENGTH_SHORT).show()
             }
-            Toast.makeText(context, "Added Member", Toast.LENGTH_SHORT).show()
-             // Store Member in the database
+        }
+
+
         return true
 
     }
@@ -259,6 +267,17 @@ class MembersFragment : Fragment() {
             memberRecyclerView.addMember(members)
             membersBinding.membersRv.visibility = View.VISIBLE
         }
+    }
+
+    override fun onItemDeleted(member : MemberData) {
+        memberViewModel.deleteMember(member) { isDeleted ->
+            if (isDeleted) {
+                Toast.makeText(context, "Member deleted successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Failed to delete Member", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
 }
