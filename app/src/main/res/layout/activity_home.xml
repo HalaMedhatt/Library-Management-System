@@ -24,6 +24,7 @@
         android:background="@color/cafe1"
         app:itemTextColor="@color/brown"
         app:itemIconTint="@color/brown"
+        app:itemActiveIndicatorStyle="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -7,10 +7,10 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.hala.librarymanagementsystem.R
-import com.hala.librarymanagementsystem.model.BookData
 import com.hala.librarymanagementsystem.model.MemberData
 
 class MemberRecyclerView(private val itemDeletedListener: OnItemDeleted<MemberData>) : RecyclerView.Adapter<MemberRecyclerView.memberViewHolder>() {
@@ -76,7 +76,7 @@ class MemberRecyclerView(private val itemDeletedListener: OnItemDeleted<MemberDa
             builder.setTitle("Delete Member")
             builder.setMessage("Are you sure that you want to delete this member?")
 
-            builder.setPositiveButton("OK") { dialog, _ ->
+            builder.setPositiveButton("Yes") { dialog, _ ->
                 deleteMember(position) // Delete the member
                 dialog.dismiss()
             }
@@ -91,11 +91,14 @@ class MemberRecyclerView(private val itemDeletedListener: OnItemDeleted<MemberDa
         private fun deleteMember(position: Int) {
             if (position >= 0 && position < memberList.size) {
                 val memberToDelete = memberList[position] // Get the member to delete
-                memberList.removeAt(position) // Remove the member from the list
-                notifyItemRemoved(position) // Notify the adapter
-
-                // Notify the listener with the member to delete
-                itemDeletedListener.onItemDeleted(memberToDelete)
+                if(memberToDelete.borrowedBooks.isNotEmpty()) {
+                    Toast.makeText(itemView.context, "This member currently has some borrowed books. They have to be returned before deleting the member.", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    memberList.removeAt(position)
+                    notifyItemRemoved(position)
+                    itemDeletedListener.onItemDeleted(memberToDelete)
+                }
             }
         }
     }

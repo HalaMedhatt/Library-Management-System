@@ -18,7 +18,7 @@
     </style>
 
         <!-- Define a custom style for the dialog -->
-    <style name="CustomDialogButton" parent="TextAppearance.AppCompat.Button">
+    <style name="CustomDialogButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textColor">@color/cafe3</item> <!-- Replace with your color -->
     </style>
 
@@ -31,6 +31,8 @@
         <!-- Customize the color of the buttons -->
         <item name="android:buttonStyle">@style/CustomDialogButton</item> <!-- Apply custom button style -->
         <!-- Optional: Customize other aspects if needed -->
+        <item name="buttonBarPositiveButtonStyle">@style/CustomDialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/CustomDialogButton</item>
     </style>
 
 </resources>

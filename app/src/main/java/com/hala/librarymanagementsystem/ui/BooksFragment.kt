@@ -82,9 +82,10 @@ class BooksFragment : Fragment() ,OnItemDeleted<BookData>{
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
                     bookViewModel.listAllBooks().observe(viewLifecycleOwner) { books ->
-                        showSearchResult(books)
+                        booksBinding.noResultTv.visibility = View.GONE
+                        bookRecyclerView.setBooks(books)
+                        booksBinding.booksRv.visibility = View.VISIBLE
                     }
-
                 }
             }
             override fun afterTextChanged(s: Editable?) {}
@@ -93,6 +94,7 @@ class BooksFragment : Fragment() ,OnItemDeleted<BookData>{
 
     private fun setupRecyclerView() {
         booksBinding.booksRv.layoutManager = GridLayoutManager(context, 2) // 2 columns
+        booksBinding.noResultTv.visibility = View.GONE
         booksBinding.booksRv.adapter = bookRecyclerView
         // Initialize with existing list or empty list
         bookViewModel.listAllBooks().observe(viewLifecycleOwner) { books ->
@@ -126,7 +128,6 @@ class BooksFragment : Fragment() ,OnItemDeleted<BookData>{
                     imageUri = selectedImageUri?.toString()
                         ?: "android.resource://${requireContext().packageName}/${R.drawable.temp_book}"  // Use default image if none is selected
                 )
-
                 bookViewModel.addBook(newBook) { isAdded ->
                     if (isAdded) {
                         bookViewModel.listAllBooks().observe(viewLifecycleOwner) { books ->
@@ -254,13 +255,14 @@ class BooksFragment : Fragment() ,OnItemDeleted<BookData>{
     }
 
     override fun onItemDeleted(book: BookData) {
-
+        booksBinding.waitBook.visibility = View.VISIBLE
         bookViewModel.deleteBook(book) { isDeleted ->
             if (isDeleted) {
                 Toast.makeText(context, "Book deleted successfully", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "Failed to delete book", Toast.LENGTH_SHORT).show()
             }
+            booksBinding.waitBook.visibility = View.GONE
         }
     }
 }

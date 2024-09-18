@@ -42,15 +42,33 @@ class LibraryViewModel(application: Application): AndroidViewModel(application) 
         }
     }
 
-    fun updateBook(book: BookData) {
+    fun updateBook(book: BookData, onComplete: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            database.libraryDao().updateBook(book)
+            try {
+                database.libraryDao().updateBook(book)
+                withContext(Dispatchers.Main) {
+                    onComplete(true) // Notify success
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    onComplete(false) // Notify failure (optional)
+                }
+            }
         }
     }
 
-    fun updateMember(member: MemberData) {
+    fun updateMember(member: MemberData, onComplete: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            database.libraryDao().updateMember(member)
+            try {
+                database.libraryDao().updateMember(member)
+                withContext(Dispatchers.Main) {
+                    onComplete(true) // Notify success
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    onComplete(false) // Notify failure (optional)
+                }
+            }
         }
     }
 

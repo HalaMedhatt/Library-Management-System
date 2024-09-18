@@ -23,7 +23,7 @@ interface LibraryDao {
     suspend fun updateMember(member: MemberData)
 
     @Delete
-    suspend fun deleteBook(book: BookData)
+    suspend fun deleteBook(book: BookData): Int
 
     @Delete
     suspend fun deleteMember(member: MemberData)

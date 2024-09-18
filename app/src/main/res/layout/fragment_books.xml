@@ -95,4 +95,18 @@
         app:layout_constraintTop_toBottomOf="@+id/books_appbar"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <FrameLayout
+        android:id="@+id/wait_book"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:backgroundTint="#3C000000"
+        android:visibility="gone">
+        <ProgressBar
+            android:id="@+id/wait_book_pb"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container, fragment)
+            addToBackStack(null)
             commit()
         }
     }

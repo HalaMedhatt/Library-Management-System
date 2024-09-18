@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Color when the button is enabled -->
+    <item android:color="@color/cafe1" android:state_enabled="true" />
+
+    <!-- Color when the button is disabled -->
+    <item android:color="@color/cafe2" android:state_enabled="false" />
+
+</selector>

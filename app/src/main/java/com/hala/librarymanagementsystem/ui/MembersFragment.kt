@@ -22,7 +22,6 @@ import androidx.fragment.app.viewModels
 import com.hala.librarymanagementsystem.R
 import com.hala.librarymanagementsystem.databinding.DialogAddMemberBinding
 import com.hala.librarymanagementsystem.databinding.FragmentMembersBinding
-import com.hala.librarymanagementsystem.model.BookData
 import com.hala.librarymanagementsystem.model.LibraryViewModel
 import com.hala.librarymanagementsystem.model.MemberData
 import com.hala.librarymanagementsystem.model.MemberFilters
@@ -87,7 +86,9 @@ class MembersFragment : Fragment(),OnItemDeleted<MemberData> {
     private fun setUpRecyclerView() {
         membersBinding.membersRv.adapter=memberRecyclerView
         memberViewModel.listAllMembers().observe(viewLifecycleOwner) { members ->
+            membersBinding.noResultTv.visibility = View.GONE
             memberRecyclerView.addMember(members)
+            membersBinding.membersRv.visibility = View.VISIBLE
         }
     }
     @SuppressLint("SuspiciousIndentation")
@@ -230,7 +231,9 @@ class MembersFragment : Fragment(),OnItemDeleted<MemberData> {
             MemberFilters.ALL -> {
                 if(searchText.isEmpty()) {
                     memberViewModel.listAllMembers().observe(viewLifecycleOwner) { members ->
-                        showSearchResult(members)
+                        membersBinding.noResultTv.visibility = View.GONE
+                        memberRecyclerView.addMember(members)
+                        membersBinding.membersRv.visibility = View.VISIBLE
                     }
                 }
                 else {
@@ -244,7 +247,9 @@ class MembersFragment : Fragment(),OnItemDeleted<MemberData> {
                 if(searchText.isEmpty()) {
                     memberViewModel.listPremiumMembers()
                         .observe(viewLifecycleOwner) { members ->
-                            showSearchResult(members)
+                            membersBinding.noResultTv.visibility = View.GONE
+                            memberRecyclerView.addMember(members)
+                            membersBinding.membersRv.visibility = View.VISIBLE
                         }
                 }
                 else {
@@ -270,12 +275,14 @@ class MembersFragment : Fragment(),OnItemDeleted<MemberData> {
     }
 
     override fun onItemDeleted(member : MemberData) {
+        membersBinding.waitMember.visibility = View.VISIBLE
         memberViewModel.deleteMember(member) { isDeleted ->
             if (isDeleted) {
                 Toast.makeText(context, "Member deleted successfully", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "Failed to delete Member", Toast.LENGTH_SHORT).show()
             }
+            membersBinding.waitMember.visibility = View.GONE
         }
 
     }

@@ -1,14 +1,12 @@
 package com.hala.librarymanagementsystem.ui.adapter
-import android.annotation.SuppressLint
-import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hala.librarymanagementsystem.R
@@ -52,7 +50,7 @@ class BookRecyclerView(private val itemDeletedListener: OnItemDeleted<BookData>)
             builder.setTitle("Delete Book")
             builder.setMessage("Are you sure that you want to delete this book?")
 
-            builder.setPositiveButton("OK") { dialog, _ ->
+            builder.setPositiveButton("Yes") { dialog, _ ->
                 deleteBook(position) // Delete the book
                 dialog.dismiss()
             }
@@ -68,9 +66,14 @@ class BookRecyclerView(private val itemDeletedListener: OnItemDeleted<BookData>)
            // Log.d("deleteBook","${position}")
             var book =bookList[position]
             if (position >= 0 && position < bookList.size) {
-                bookList.removeAt(position)
-                notifyItemRemoved(position)
-                itemDeletedListener.onItemDeleted(book)
+                if(book.isBorrowed) {
+                    Toast.makeText(itemView.context, "This book is currently borrowed. Please, return it first.", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    bookList.removeAt(position)
+                    notifyItemRemoved(position)
+                    itemDeletedListener.onItemDeleted(book)
+                }
             }
 
         }

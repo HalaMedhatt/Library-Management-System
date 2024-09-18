@@ -9,4 +9,6 @@ class BookData(
     val title: String,
     val author: String,
     val genre: String,
-    val imageUri: String)
+    val imageUri: String,
+    var isBorrowed: Boolean = false
+)
