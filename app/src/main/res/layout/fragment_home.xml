@@ -85,7 +85,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/button_tint"
                 android:text="Borrow"
-                android:textColor="@color/background"
+                android:textColor="@color/brown"
                 android:textSize="16sp" />
 
             <Button
@@ -96,7 +96,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/button_tint"
                 android:text="Return"
-                android:textColor="@color/background"
+                android:textColor="@color/brown"
                 android:textSize="16sp" />
         </LinearLayout>
 

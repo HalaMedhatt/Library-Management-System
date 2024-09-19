@@ -134,6 +134,7 @@ class BooksFragment : Fragment() ,OnItemDeleted<BookData>{
                             bookRecyclerView.setBooks(books)
                         }
                         Toast.makeText(context, "Book added successfully", Toast.LENGTH_SHORT).show()
+                        selectedImageUri=null
                     } else {
                         Toast.makeText(context, "Failed to add book", Toast.LENGTH_SHORT).show()
                     }
