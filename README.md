@@ -7,11 +7,8 @@ A powerful **Library Management System** built for Android, designed specificall
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Technologies Used](#technologies-used)
-- [Getting Started](#getting-started)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+- 
 
 ## About
 
@@ -26,6 +23,24 @@ This app is designed exclusively for **library managers** to oversee library ope
 - Search for books by title, author, or genre.
 - User authentication for managers only.
 
+## screenshots
+<table>
+  <tr>
+    <td><img src="photo_6012343689550086387_y.jpg" width="200"></td>
+    <td><img src="photo_6012343689550086388_y.jpg" width="200"></td>
+  </tr>
+  <tr>
+    <td><img src="photo_6012343689550086391_y.jpg" width="200"></td>
+    <td><img src="photo_6012343689550086386_y.jpg" width="200"></td>
+    <td><img src="photo_6012343689550086392_y.jpg" width="200"></td>
+  </tr>
+   <tr>
+    <td><img src="photo_6012343689550086389_y.jpg" width="200"></td>
+    <td><img src="photo_6012343689550086390_y.jpg" width="200"></td>
+  </tr>
+</table>
+
+
 
 
 ## Technologies Used
@@ -36,7 +51,6 @@ This app is designed exclusively for **library managers** to oversee library ope
 - **XML** – For UI design
 - **Material Design** – Modern UI elements and layout
 
-## Getting Started
 
 ### Prerequisites
 
